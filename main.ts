@@ -753,3 +753,9 @@ if (mySprite.y < sprite_height - 100) {
     }
     mySprite.setPosition(32, 450)
 }
+game.onUpdate(function () {
+    if (mySprite.y >= 50) {
+        tileUtil.coverTile(tiles.getTileLocation(0, 3), assets.tile`transparency16`)
+        tileUtil.setWallAt(tilemap`Supergood`, tiles.getTileLocation(0, 3), false)
+    }
+})
