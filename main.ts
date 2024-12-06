@@ -1,14 +1,12 @@
-/**
- * Additional Features:
- * 
- * 1. drop larger than x = die
- * 
- * 2. little bee flying after 3rd level, mush hit bee = die
- * 
- * 3.  score = sprite.y
- * 
- * 4.
- */
+// Additional Features:
+// 
+// 1. drop larger than x = die
+// 
+// 2. little bee flying after 3rd level, mush hit bee = die
+// 
+// 3.  score = sprite.y
+// 
+// 4.
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.vy == 0) {
         mySprite.vy = -170
@@ -665,7 +663,7 @@ for (let value of tiles.getTilesByType(assets.tile`myTile3`)) {
     )
     tiles.placeOnTile(mySprite3, value)
 }
-for (let value of tiles.getTilesByType(assets.tile`myTile1`)) {
+for (let value2 of tiles.getTilesByType(assets.tile`myTile1`)) {
     mySprite2 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -741,7 +739,7 @@ for (let value of tiles.getTilesByType(assets.tile`myTile1`)) {
     100,
     true
     )
-    tiles.placeOnTile(mySprite2, value)
+    tiles.placeOnTile(mySprite2, value2)
 }
 let sprite_height = mySprite.y
 if (mySprite.y < sprite_height - 100) {
@@ -754,8 +752,11 @@ if (mySprite.y < sprite_height - 100) {
     mySprite.setPosition(32, 450)
 }
 game.onUpdate(function () {
-    if (mySprite.y >= 50) {
-        tileUtil.coverTile(tiles.getTileLocation(0, 3), assets.tile`transparency16`)
-        tileUtil.setWallAt(tilemap`Supergood`, tiles.getTileLocation(0, 3), false)
+    if (mySprite.y < 37 * 16) {
+        info.setScore(0 - mySprite.y)
+        tileUtil.setTileAt(tilemap`Supergood`, tiles.getTileLocation(2, 37), assets.tile`transparency16`)
+        tileUtil.setWallAt(tilemap`Supergood`, tiles.getTileLocation(2, 37), false)
+    } else {
+        info.setScore(mySprite.y)
     }
 })
