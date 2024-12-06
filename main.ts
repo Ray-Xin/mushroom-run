@@ -44,7 +44,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         CollisionCoolDown = 0
     }
     effects.clearParticles(mySprite)
-    mySprite.setPosition(32, 450)
+    mySprite.setPosition(32, 16 * 36)
 })
 let mySprite2: Sprite = null
 let mySprite3: Sprite = null
@@ -753,22 +753,5 @@ if (mySprite.y < sprite_height - 100) {
     mySprite.setPosition(32, 450)
 }
 game.onUpdate(function () {
-    if (mySprite.vy > 0) {
-        if (high_y == 0) {
-            high_y = mySprite.y
-        }
-    }
-    if (mySprite.vy == 0) {
-        if (mySprite.y < high_y - 100) {
-            if (CollisionCoolDown == 0) {
-                info.changeLifeBy(-1)
-                CollisionCoolDown = 1
-                pause(200)
-                CollisionCoolDown = 0
-            }
-        }
-    }
-    if (mySprite.vy < 0) {
-        high_y = 0
-    }
+	
 })
