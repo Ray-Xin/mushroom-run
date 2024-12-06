@@ -1,3 +1,14 @@
+/**
+ * Additional Features:
+ * 
+ * 1. drop larger than x = die
+ * 
+ * 2. little bee flying after 3rd level, mush hit bee = die
+ * 
+ * 3.  score = sprite.y
+ * 
+ * 4.
+ */
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.vy == 0) {
         mySprite.vy = -170
@@ -30,6 +41,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     mySprite.setPosition(32, 450)
 })
 let mySprite2: Sprite = null
+let mySprite3: Sprite = null
 let mySprite: Sprite = null
 let CollisionCoolDown = 0
 info.setLife(3)
@@ -570,7 +582,81 @@ scene.setBackgroundImage(img`
     `)
 scene.cameraFollowSprite(mySprite)
 tiles.setCurrentTilemap(tilemap`Supergood`)
-mySprite.setPosition(32, 450)
+mySprite.setPosition(32, 16 * 36)
+mySprite.sayText("Let's Go!", 2000, true)
+for (let value of tiles.getTilesByType(assets.tile`myTile3`)) {
+    mySprite3 = sprites.create(img`
+        . . b b b b . . 
+        . b 5 5 5 5 b . 
+        b 5 d 3 3 d 5 b 
+        b 5 3 5 5 1 5 b 
+        c 5 3 5 5 1 d c 
+        c d d 1 1 d d c 
+        . f d d d d f . 
+        . . f f f f . . 
+        `, SpriteKind.Food)
+    animation.runImageAnimation(
+    mySprite3,
+    [img`
+        . . b b b b . . 
+        . b 5 5 5 5 b . 
+        b 5 d 3 3 d 5 b 
+        b 5 3 5 5 1 5 b 
+        c 5 3 5 5 1 d c 
+        c d d 1 1 d d c 
+        . f d d d d f . 
+        . . f f f f . . 
+        `,img`
+        . . b b b . . . 
+        . b 5 5 5 b . . 
+        b 5 d 3 d 5 b . 
+        b 5 3 5 1 5 b . 
+        c 5 3 5 1 d c . 
+        c 5 d 1 d d c . 
+        . f d d d f . . 
+        . . f f f . . . 
+        `,img`
+        . . . b b . . . 
+        . . b 5 5 b . . 
+        . b 5 d 1 5 b . 
+        . b 5 3 1 5 b . 
+        . c 5 3 1 d c . 
+        . c 5 1 d d c . 
+        . . f d d f . . 
+        . . . f f . . . 
+        `,img`
+        . . . b b . . . 
+        . . b 5 5 b . . 
+        . . b 1 1 b . . 
+        . . b 5 5 b . . 
+        . . b d d b . . 
+        . . c d d c . . 
+        . . c 3 3 c . . 
+        . . . f f . . . 
+        `,img`
+        . . . b b . . . 
+        . . b 5 5 b . . 
+        . b 5 1 d 5 b . 
+        . b 5 1 3 5 b . 
+        . c d 1 3 5 c . 
+        . c d d 1 5 c . 
+        . . f d d f . . 
+        . . . f f . . . 
+        `,img`
+        . . . b b b . . 
+        . . b 5 5 5 b . 
+        . b 5 d 3 d 5 b 
+        . b 5 1 5 3 5 b 
+        . c d 1 5 3 5 c 
+        . c d d 1 d 5 c 
+        . . f d d d f . 
+        . . . f f f . . 
+        `],
+    100,
+    true
+    )
+    tiles.placeOnTile(mySprite3, value)
+}
 for (let value of tiles.getTilesByType(assets.tile`myTile1`)) {
     mySprite2 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
@@ -649,3 +735,16 @@ for (let value of tiles.getTilesByType(assets.tile`myTile1`)) {
     )
     tiles.placeOnTile(mySprite2, value)
 }
+let sprite_height = mySprite.y
+if (mySprite.y < sprite_height - 100) {
+    if (CollisionCoolDown == 0) {
+        info.changeLifeBy(-1)
+        CollisionCoolDown = 1
+        pause(200)
+        CollisionCoolDown = 0
+    }
+    mySprite.setPosition(32, 450)
+}
+forever(function () {
+	
+})
