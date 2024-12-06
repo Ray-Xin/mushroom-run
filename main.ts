@@ -754,8 +754,8 @@ if (mySprite.y < sprite_height - 100) {
 game.onUpdate(function () {
     if (mySprite.y < 37 * 16) {
         info.setScore(0 - mySprite.y)
-        tileUtil.setTileAt(tilemap`Supergood`, tiles.getTileLocation(2, 37), assets.tile`transparency16`)
         tileUtil.setWallAt(tilemap`Supergood`, tiles.getTileLocation(2, 37), false)
+        tileUtil.setTileAt(tilemap`Supergood`, tiles.getTileLocation(2, 37), assets.tile`myTile4`)
     } else {
         info.setScore(mySprite.y)
     }
