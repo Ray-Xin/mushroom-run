@@ -17,6 +17,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setVelocity(-100, 0)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile3`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+})
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
     mySprite.setVelocity(0, 0)
 })
@@ -25,6 +28,11 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setVelocity(100, 0)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    music.play(music.melodyPlayable(music.baDing), music.PlaybackMode.UntilDone)
+    sprites.destroy(otherSprite)
+    info.changeScoreBy(1)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     mySprite.startEffect(effects.fire, 1000)
@@ -745,6 +753,3 @@ if (mySprite.y < sprite_height - 100) {
     }
     mySprite.setPosition(32, 450)
 }
-forever(function () {
-	
-})
