@@ -50,6 +50,7 @@ let mySprite2: Sprite = null
 let mySprite3: Sprite = null
 let mySprite: Sprite = null
 let CollisionCoolDown = 0
+let high_y = 0
 info.setLife(3)
 CollisionCoolDown = 0
 mySprite = sprites.create(img`
@@ -752,11 +753,22 @@ if (mySprite.y < sprite_height - 100) {
     mySprite.setPosition(32, 450)
 }
 game.onUpdate(function () {
-    if (mySprite.y < 37 * 16) {
-        info.setScore(0 - mySprite.y)
-        tileUtil.setWallAt(tilemap`Supergood`, tiles.getTileLocation(2, 37), false)
-        tileUtil.setTileAt(tilemap`Supergood`, tiles.getTileLocation(2, 37), assets.tile`myTile4`)
-    } else {
-        info.setScore(mySprite.y)
+    if (mySprite.vy > 0) {
+        if (high_y == 0) {
+            high_y = mySprite.y
+        }
+    }
+    if (mySprite.vy == 0) {
+        if (mySprite.y < high_y - 100) {
+            if (CollisionCoolDown == 0) {
+                info.changeLifeBy(-1)
+                CollisionCoolDown = 1
+                pause(200)
+                CollisionCoolDown = 0
+            }
+        }
+    }
+    if (mySprite.vy < 0) {
+        high_y = 0
     }
 })
